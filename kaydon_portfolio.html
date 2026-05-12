@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaydon Lim – Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ===== THEME TOKENS ===== */
+  [data-theme="dark"] {
+    --bg: #1A1208;
+    --bg-sec: #221A0F;
+    --surface: rgba(245,240,232,0.04);
+    --text-primary: #F5F0E8;
+    --text-muted: #8A7968;
+    --border: rgba(200,133,58,0.12);
+    --border-accent: rgba(200,133,58,0.15);
+    --nav-bg: rgba(26,18,8,0.92);
+    --mob-bg: rgba(26,18,8,0.97);
+    --caramel: #C8853A;
+    --gold: #E8A94A;
+    --toggle-icon: '☀';
+  }
+
+  [data-theme="light"] {
+    --bg: #FAF7F2;
+    --bg-sec: #F0EAE0;
+    --surface: rgba(61,43,31,0.04);
+    --text-primary: #1A1208;
+    --text-muted: #6B5247;
+    --border: rgba(61,43,31,0.12);
+    --border-accent: rgba(200,133,58,0.25);
+    --nav-bg: rgba(250,247,242,0.92);
+    --mob-bg: rgba(250,247,242,0.98);
+    --caramel: #A8682A;
+    --gold: #B07828;
+    --toggle-icon: '☽';
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-accent);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    z-index: 201;
+  }
+
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+
+  .nav-links a {
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    text-decoration: none;
+    opacity: 0.65;
+    transition: opacity 0.2s, color 0.2s;
+    font-weight: 500;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--caramel); }
+
+  /* Theme toggle */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border-accent);
+    color: var(--text-primary);
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    transition: border-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle:hover { border-color: var(--caramel); color: var(--caramel); }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 201;
+    background: none;
+    border: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--text-primary);
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--mob-bg);
+    z-index: 199;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 2rem;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    opacity: 0.85;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--caramel); opacity: 1; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 55%; height: 130%;
+    background: radial-gradient(ellipse at center, rgba(200,133,58,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,133,58,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,133,58,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 1; }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--caramel);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--caramel);
+    flex-shrink: 0;
+  }
+
+  h1.hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.05;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  h1.hero-name em { font-style: italic; color: var(--gold); }
+
+  .hero-title {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin: 1.5rem 0 2.5rem;
+    font-weight: 300;
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 0.75rem 1.75rem;
+    background: var(--caramel);
+    color: #FAF7F2;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--gold); transform: translateY(-1px); }
+
+  .btn-ghost {
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border-accent);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--caramel); color: var(--caramel); }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 4rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border-accent);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: border-color 0.2s;
+  }
+
+  .stat-card:hover { border-color: var(--caramel); }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--caramel);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--caramel);
+    flex-shrink: 0;
+  }
+
+  h2.section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    color: var(--text-primary);
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+
+  /* ===== TICKER ===== */
+  .ticker-wrap {
+    width: 100%;
+    background: var(--caramel);
+    overflow: hidden;
+    padding: 0.6rem 0;
+    white-space: nowrap;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .ticker-inner { display: inline-block; animation: ticker 22s linear infinite; }
+
+  .ticker-item {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #FAF7F2;
+    padding: 0 2rem;
+  }
+
+  .ticker-dot {
+    display: inline-block;
+    width: 4px; height: 4px;
+    background: #FAF7F2;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 0.5rem;
+    opacity: 0.45;
+  }
+
+  /* ===== ABOUT ===== */
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-left-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--text-primary);
+    line-height: 1.2;
+    position: sticky;
+    top: 6rem;
+  }
+
+  .about-left-label em { font-style: italic; color: var(--gold); }
+
+  .about-body { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .about-body p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .about-body p strong { color: var(--text-primary); font-weight: 500; }
+
+  .about-now {
+    margin-top: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border-accent);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .about-now-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--caramel);
+  }
+
+  .about-now-items { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .about-now-items span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .about-now-items span::before {
+    content: '·  ';
+    color: var(--caramel);
+  }
+
+  /* ===== EDUCATION ===== */
+  .edu-card {
+    border: 1px solid var(--border);
+    padding: 2rem 2.25rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem 3rem;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+
+  .edu-card:hover { border-color: var(--caramel); }
+
+  .edu-degree {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+    line-height: 1.25;
+  }
+
+  .edu-school {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+  }
+
+  .edu-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--caramel);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    padding-top: 0.25rem;
+  }
+
+  .edu-details {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .edu-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.85rem;
+  }
+
+  .edu-row-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    min-width: 90px;
+    padding-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .edu-row-val {
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .edu-cca-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .edu-cca-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    opacity: 0.85;
+  }
+
+  /* ===== SKILLS ===== */
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .skill-group { border: 1px solid var(--border); padding: 1.75rem; }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .skill-tag {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-weight: 400;
+    border: 1px solid var(--border);
+    opacity: 0.85;
+    transition: opacity 0.2s, background 0.2s;
+  }
+
+  .skill-tag:hover { opacity: 1; border-color: var(--caramel); }
+
+  /* ===== EXPERIENCE ===== */
+  .exp-list { display: flex; flex-direction: column; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+  .exp-left { padding-top: 0.25rem; }
+
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--caramel);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-company { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; }
+  .exp-type { font-size: 0.72rem; color: var(--text-muted); }
+
+  .exp-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .exp-bullets li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--caramel);
+    font-size: 0.75rem;
+    top: 0.15em;
+  }
+
+  .exp-highlight { color: var(--gold); font-weight: 500; }
+
+  /* ===== PROJECTS ===== */
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+  .project-card {
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--caramel), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .project-card:hover { border-color: var(--caramel); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-name { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.75rem; }
+  .project-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; font-weight: 300; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border-accent);
+    color: var(--caramel);
+  }
+
+  /* ===== COFFEE ===== */
+  .coffee-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+  .coffee-badge {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #FAF7F2;
+    background: var(--caramel);
+    padding: 0.35rem 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .coffee-headline { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.75rem); color: var(--text-primary); line-height: 1.15; margin-bottom: 1.25rem; }
+  .coffee-headline em { font-style: italic; color: var(--gold); }
+  .coffee-desc { font-size: 0.92rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+  .coffee-media-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  .media-badge {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border-accent);
+    color: var(--caramel);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+  }
+
+  .coffee-visual {
+    height: 340px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .coffee-tech { margin-top: 1.5rem; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); }
+  .coffee-tech strong { color: var(--caramel); font-weight: 500; }
+
+  /* ===== FOOTER ===== */
+  footer { border-top: 1px solid var(--border); padding: 3rem; text-align: center; }
+  .footer-name { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+
+  .footer-links { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .footer-links a:hover { opacity: 1; }
+  .footer-copy { margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); opacity: 0.5; }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-left > * { animation: fadeUp 0.6s ease both; }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.35s; }
+  .hero-left > *:nth-child(4) { animation-delay: 0.5s; }
+  .hero-right > * { animation: fadeUp 0.6s ease both; }
+  .hero-right > *:nth-child(1) { animation-delay: 0.25s; }
+  .hero-right > *:nth-child(2) { animation-delay: 0.4s; }
+  .hero-right > *:nth-child(3) { animation-delay: 0.55s; }
+
+  /* ===== TABLET ≤ 900px ===== */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; min-height: auto; gap: 3rem; }
+    .hero-right { padding-left: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .stat-num { font-size: 1.7rem; }
+
+    .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-left-label { position: static; font-size: clamp(1.6rem, 4vw, 2.2rem); }
+
+    .edu-card { grid-template-columns: 1fr; gap: 0.5rem; }
+    .edu-year { padding-top: 0; }
+
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .exp-left { padding-top: 0; }
+
+    .projects-grid { grid-template-columns: 1fr; }
+
+    .coffee-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .coffee-visual { height: 240px; }
+
+    section { padding: 4rem 1.5rem; }
+  }
+
+  /* ===== MOBILE ≤ 600px ===== */
+  @media (max-width: 600px) {
+    nav { padding: 1rem; }
+    .hero { padding: 6rem 1rem 2.5rem; gap: 2rem; }
+    h1.hero-name { font-size: clamp(2.6rem, 13vw, 3.5rem); }
+    .hero-title { font-size: 0.95rem; max-width: 100%; margin-bottom: 2rem; }
+    .hero-right { grid-template-columns: 1fr; gap: 0.75rem; }
+    .stat-num { font-size: 1.9rem; }
+    .hero-cta { flex-direction: column; }
+    .btn-primary, .btn-ghost { justify-content: center; width: 100%; }
+
+    .skills-grid { grid-template-columns: 1fr; }
+
+    section { padding: 3rem 1rem; }
+    h2.section-title { margin-bottom: 2rem; }
+    .exp-item { padding: 1.75rem 0; }
+    .exp-role { font-size: 1.1rem; }
+    .coffee-visual { height: 200px; }
+    .coffee-inner { gap: 2rem; }
+    footer { padding: 2rem 1rem; }
+    .footer-name { font-size: 1.5rem; }
+    .footer-links { gap: 1rem; }
+
+    .edu-card { padding: 1.5rem; }
+    .edu-row { flex-direction: column; gap: 0.3rem; }
+    .edu-row-label { min-width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Kaydon Lim</span>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#coffee">Coffee</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">☀</button>
+    <button class="hamburger" id="menuBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mob-link">About</a>
+  <a href="#education" class="mob-link">Education</a>
+  <a href="#experience" class="mob-link">Experience</a>
+  <a href="#projects" class="mob-link">Projects</a>
+  <a href="#coffee" class="mob-link">Coffee by the Porch</a>
+  <a href="#contact" class="mob-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Data · Finance · Engineering</div>
+    <h1 class="hero-name">Kaydon<br><em>Lim</em></h1>
+    <p class="hero-title">Investment Data Analyst at St. James's Place Asia & Middle East — building data infrastructure at the intersection of finance and technology.</p>
+    <div class="hero-cta">
+      <a href="https://www.linkedin.com/in/kaydon-lim/" class="btn-primary">LinkedIn ↗</a>
+      <a href="https://github.com/hambalah" class="btn-ghost">GitHub ↗</a>
+      <a href="resume.pdf" class="btn-ghost" download>Resume ↓</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-card">
+      <span class="stat-num">3+</span>
+      <span class="stat-label">Years of industry experience</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">78%</span>
+      <span class="stat-label">Index pricing review time cut at JPMorgan</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">CFA L1</span>
+      <span class="stat-label">Registered · Exam Nov 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span class="ticker-item">Python</span><span class="ticker-dot"></span>
+    <span class="ticker-item">SQL</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Apache Spark</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Power BI</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Bloomberg</span><span class="ticker-dot"></span>
+    <span class="ticker-item">AWS</span><span class="ticker-dot"></span>
+    <span class="ticker-item">ETL Workflows</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Investment Operations</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Machine Learning</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Alteryx</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Tableau</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Reference Data</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Python</span><span class="ticker-dot"></span>
+    <span class="ticker-item">SQL</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Apache Spark</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Power BI</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Bloomberg</span><span class="ticker-dot"></span>
+    <span class="ticker-item">AWS</span><span class="ticker-dot"></span>
+    <span class="ticker-item">ETL Workflows</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Investment Operations</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Machine Learning</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Alteryx</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Tableau</span><span class="ticker-dot"></span>
+    <span class="ticker-item">Reference Data</span><span class="ticker-dot"></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who I am</div>
+  <div class="about-inner">
+    <div class="about-left-label">
+      Data analyst.<br>Builder.<br><em>Coffee person.</em>
+    </div>
+    <div class="about-body">
+      <p>
+        I'm a <strong>data analyst and engineer</strong> based in Singapore, working at the intersection of financial markets and data infrastructure. My work spans building investment dashboards, automating reporting pipelines, and making sense of messy market data — across firms like St. James's Place, JPMorgan, and Caladan.
+      </p>
+      <p>
+        My background in <strong>Information Systems (Business Analytics)</strong> from SMU gave me the technical foundation, but it's the time spent inside trading desks and investment operations that shaped how I think about data — not just as output, but as a decision-making input that has to be accurate, timely, and trusted.
+      </p>
+      <p>
+        Outside of work, I run a home café called <strong>Coffee by the Porch</strong> — featured in Channel News Asia and The Straits Times — and I'm currently preparing for the <strong>CFA Level 1</strong> exam in November 2026. I find the overlap between finance theory and day-to-day market data work genuinely interesting.
+      </p>
+      <div class="about-now">
+        <div class="about-now-label">Currently</div>
+        <div class="about-now-items">
+          <span>Investment Data Analyst at St. James's Place Asia & Middle East</span>
+          <span>Preparing for CFA Level 1 — Exam: November 2026</span>
+          <span>Exploring cloud data engineering (AWS, Spark pipelines)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="max-width:1100px; margin:0 auto; border-top: 1px solid var(--border);">
+  <div class="section-label">Where I studied</div>
+  <h2 class="section-title">Education</h2>
+  <div class="edu-card">
+    <div>
+      <div class="edu-school">Singapore Management University</div>
+      <div class="edu-degree">BSc Information Systems<br><span style="font-size:0.95rem; font-style:italic; color:var(--gold);">Major in Business Analytics</span></div>
+    </div>
+    <div class="edu-year">Graduated Jul 2025</div>
+    <div class="edu-details">
+      <div class="edu-row">
+        <span class="edu-row-label">Coursework</span>
+        <span class="edu-row-val">Big Data Architecture <strong style="color:var(--caramel);">(A+)</strong> · Social Analytics · Data Mining & Business Analytics</span>
+      </div>
+      <div class="edu-row">
+        <span class="edu-row-label">Activities</span>
+        <div class="edu-cca-tags">
+          <span class="edu-cca-tag">SMU Blockchain Club — Sector Head</span>
+          <span class="edu-cca-tag">SMU Business Intelligence & Analytics</span>
+          <span class="edu-cca-tag">SMU FinTech</span>
+          <span class="edu-cca-tag">Project Kapawa — Program Lead</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="max-width:1100px; margin:0 auto; border-top: 1px solid var(--border);">
+  <div class="section-label">What I work with</div>
+  <h2 class="section-title">Skills & Toolset</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Technical</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Spark</span>
+        <span class="skill-tag">Hadoop</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">AWS</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Alteryx</span>
+        <span class="skill-tag">MS Excel</span>
+        <span class="skill-tag">Flask</span>
+        <span class="skill-tag">Machine Learning</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Domain knowledge</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Investment Operations</span>
+        <span class="skill-tag">Reference Data</span>
+        <span class="skill-tag">Market Data Analysis</span>
+        <span class="skill-tag">Financial Markets</span>
+        <span class="skill-tag">Equities</span>
+        <span class="skill-tag">Fixed Income</span>
+        <span class="skill-tag">Derivatives</span>
+        <span class="skill-tag">Crypto Markets</span>
+        <span class="skill-tag">DCF Valuation</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Soft skills & certs</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Analytical Thinking</span>
+        <span class="skill-tag">Project Management</span>
+        <span class="skill-tag">Client Engagement</span>
+        <span class="skill-tag">Applied ML (Heicoders)</span>
+        <span class="skill-tag">DCF Valuation (CFI)</span>
+        <span class="skill-tag">CFA L1 — Nov 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="max-width:1100px; margin:0 auto; border-top: 1px solid var(--border);">
+  <div class="section-label">Where I've worked</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">Jan 2026 — Present</div>
+        <div class="exp-company">St. James's Place Asia & Middle East</div>
+        <div class="exp-type">Full-time</div>
+      </div>
+      <div>
+        <div class="exp-role">Investment Data Analyst – Portfolio Management</div>
+        <ul class="exp-bullets">
+          <li>Build and maintain <span class="exp-highlight">Power BI dashboards</span> supporting investment decision-making, performance tracking, and senior stakeholder reviews</li>
+          <li>Strategise and engineer workflows to improve processes for portfolio analytics</li>
+          <li>Automate recurring data workflows and statement generation using <span class="exp-highlight">Python and SQL</span>, reducing manual intervention</li>
+          <li>Contribute to the investment reporting roadmap, prioritising data quality, scalability, and governance</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">Jun — Dec 2025</div>
+        <div class="exp-company">JPMorgan Chase & Co</div>
+        <div class="exp-type">Contract</div>
+      </div>
+      <div>
+        <div class="exp-role">Reference Data Analyst – Global Valuation Services</div>
+        <ul class="exp-bullets">
+          <li>Developed <span class="exp-highlight">Python and Alteryx</span> automation workflows — reduced Index Pricing review time from <span class="exp-highlight">45 min → 10 min (78% faster)</span></li>
+          <li>Validated and reconciled pricing and valuation data across equities, fixed income, and derivatives</li>
+          <li>Cross-verified valuations against Bloomberg, Reuters, and ICE pricing vendors</li>
+          <li>Partnered with Operations, Client Service, and Fund Accountants globally to resolve discrepancies</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">May — Dec 2024</div>
+        <div class="exp-company">Caladan (fmr. AlphaLab Capital)</div>
+        <div class="exp-type">Internship</div>
+      </div>
+      <div>
+        <div class="exp-role">Data Analyst Intern – Market Maker (Trading)</div>
+        <ul class="exp-bullets">
+          <li>Co-delivered quarterly <span class="exp-highlight">State of Liquidity Report</span> for institutional clients, increasing accuracy by 15%</li>
+          <li>Engineered ETL workflows to clean, normalise, and aggregate on-chain data for cryptocurrency valuations</li>
+          <li>Conducted predictive trading strategies (mean-reversion, trend-following) using <span class="exp-highlight">Linear Regression and PCA</span></li>
+          <li>Built Python ETL framework integrating GitHub activity and social sentiment with market data APIs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="max-width:1100px; margin:0 auto; border-top: 1px solid var(--border);">
+  <div class="section-label">Side builds</div>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-name">Market Sentiment Analysis</div>
+      <p class="project-desc">Web scraping system extracting market sentiments and financial data from Coinglass and CNN. ETL pipeline aggregates signals to surface correlation between crypto and equity markets.</p>
+      <div class="project-tags">
+        <span class="project-tag">Selenium</span>
+        <span class="project-tag">Polars</span>
+        <span class="project-tag">ETL</span>
+        <span class="project-tag">Crypto</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-name">Coffee by the Porch – POS System</div>
+      <p class="project-desc">Custom point-of-sale system built from scratch to run a home café, automating order management and syncing to Google Sheets for real-time inventory and operations tracking.</p>
+      <div class="project-tags">
+        <span class="project-tag">Flask</span>
+        <span class="project-tag">Google Sheets API</span>
+        <span class="project-tag">Python</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COFFEE -->
+<section id="coffee" style="max-width:1100px; margin:0 auto; border-top: 1px solid var(--border);">
+  <div class="coffee-inner">
+    <div>
+      <div class="coffee-badge">Featured Venture</div>
+      <h2 class="coffee-headline">Coffee<br>by the <em>Porch</em></h2>
+      <p class="coffee-desc">A home-based café born from a genuine love of coffee and baking. What started as a passion project turned into a media-featured small business — and an engineering challenge. Beyond the brews, a custom POS system was built using Flask and the Google Sheets API to automate order management and operational workflows.</p>
+      <div class="coffee-media-badges">
+        <span class="media-badge">Channel News Asia</span>
+        <span class="media-badge">The Straits Times</span>
+      </div>
+      <div class="coffee-tech">
+        <strong>Stack:</strong> Flask · Google Sheets API · Python — automating orders, inventory, and reporting end-to-end.
+      </div>
+    </div>
+    <div class="coffee-visual">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" width="170" height="170">
+        <path d="M 55 100 L 65 160 Q 100 170 135 160 L 145 100 Z" stroke="#C8853A" stroke-width="2" fill="rgba(200,133,58,0.06)"/>
+        <ellipse cx="100" cy="100" rx="45" ry="10" stroke="#C8853A" stroke-width="2" fill="rgba(200,133,58,0.1)"/>
+        <path d="M 145 115 Q 165 115 165 130 Q 165 148 145 148" stroke="#C8853A" stroke-width="2" fill="none"/>
+        <path d="M 80 85 Q 83 70 80 55" stroke="#E8A94A" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+        <path d="M 100 80 Q 103 62 100 45" stroke="#E8A94A" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+        <path d="M 120 85 Q 117 70 120 55" stroke="#E8A94A" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+        <ellipse cx="100" cy="101" rx="30" ry="7" stroke="#E8A94A" stroke-width="1" fill="none" opacity="0.4"/>
+        <path d="M 85 101 Q 100 94 115 101" stroke="#E8A94A" stroke-width="1" fill="none" opacity="0.5"/>
+        <ellipse cx="100" cy="162" rx="48" ry="9" stroke="#C8853A" stroke-width="1.5" fill="rgba(200,133,58,0.04)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <p style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--caramel); margin-bottom:1rem;">Get in touch</p>
+  <div class="footer-name">Kaydon Lim Jun Long</div>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.5rem;">kaydonlim1111@gmail.com</p>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/kaydon-lim/">LinkedIn</a>
+    <a href="https://github.com/hambalah">GitHub</a>
+    <a href="mailto:kaydonlim1111@gmail.com">Email</a>
+  </div>
+  <p class="footer-copy">© 2026 Kaydon Lim. Built with purpose.</p>
+</footer>
+
+<script>
+  // ── Theme toggle ──
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  const saved = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', saved);
+  themeBtn.textContent = saved === 'dark' ? '☀' : '☽';
+
+  themeBtn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    themeBtn.textContent = next === 'dark' ? '☀' : '☽';
+    localStorage.setItem('theme', next);
+  });
+
+  // ── Hamburger ──
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mob-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+
+</body>
+</html>
