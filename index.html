@@ -779,6 +779,69 @@
     .edu-row { flex-direction: column; gap: 0.3rem; }
     .edu-row-label { min-width: auto; }
   }
+
+  /* ===== ICON BUTTONS ===== */
+  .btn-icon {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--border-accent);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-icon:hover { border-color: var(--caramel); color: var(--caramel); transform: translateY(-2px); }
+  .btn-icon svg { width: 18px; height: 18px; stroke: currentColor; }
+
+  .footer-icon-links { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .footer-icon-links .btn-icon { width: 48px; height: 48px; }
+  .footer-icon-links .btn-icon svg { width: 20px; height: 20px; }
+
+  /* ===== MEDIA BADGE ANIMATION ===== */
+  .media-badge {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border-accent);
+    color: var(--caramel);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s, border-color 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .media-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--caramel);
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  .media-badge span { position: relative; z-index: 1; }
+
+  .media-badge:hover { color: #FAF7F2; border-color: var(--caramel); transform: translateY(-2px); }
+  .media-badge:hover::before { transform: translateX(0); }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
 </style>
 </head>
 <body>
@@ -820,9 +883,18 @@
     <h1 class="hero-name">Kaydon<br><em>Lim</em></h1>
     <p class="hero-title">Investment Data Analyst at St. James's Place Asia & Middle East — building portfolio analytics solutions and automating reporting processes.</p>
     <div class="hero-cta">
-      <a href="https://www.linkedin.com/in/kaydon-lim/" class="btn-primary">LinkedIn ↗</a>
-      <a href="https://github.com/hambalah" class="btn-ghost">GitHub ↗</a>
-      <a href="Kaydon_Resume_2026.pdf" class="btn-ghost" download>Resume ↓</a>
+      <a href="https://www.linkedin.com/in/kaydon-lim/" class="btn-primary" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg style="width:18px;height:18px;margin-right:0.5rem;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/hambalah" class="btn-ghost" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg style="width:18px;height:18px;margin-right:0.5rem;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="Kaydon_Resume_2026.pdf" class="btn-ghost" download aria-label="Download Resume">
+        <svg style="width:18px;height:18px;margin-right:0.5rem;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume
+      </a>
     </div>
   </div>
   <div class="hero-right">
@@ -904,7 +976,7 @@
 <section id="education" style="max-width:1100px; margin:0 auto; border-top: 1px solid var(--border);">
   <div class="section-label">Where I studied</div>
   <h2 class="section-title">Education</h2>
-  <div class="edu-card">
+  <div class="edu-card reveal">
     <div>
       <div class="edu-school">Singapore Management University</div>
       <div class="edu-degree">BSc Information Systems<br><span style="font-size:0.95rem; font-style:italic; color:var(--gold);">Major in Business Analytics</span></div>
@@ -980,7 +1052,7 @@
   <div class="section-label">Where I've worked</div>
   <h2 class="section-title">Experience</h2>
   <div class="exp-list">
-    <div class="exp-item">
+    <div class="exp-item reveal">
       <div class="exp-left">
         <div class="exp-period">Jan 2026 — Present</div>
         <div class="exp-company">St. James's Place Asia & Middle East</div>
@@ -989,14 +1061,14 @@
       <div>
         <div class="exp-role">Investment Data Analyst – Portfolio Management</div>
         <ul class="exp-bullets">
-          <li>Build and maintain <span class="exp-highlight">Power BI dashboards</span> supporting investment decision-making, performance tracking, and senior stakeholder reviews</li>
-          <li>Strategise and engineer workflows to improve processes for portfolio analytics</li>
-          <li>Automate recurring data workflows and statement generation using <span class="exp-highlight">Python and SQL</span>, reducing manual intervention</li>
-          <li>Contribute to the investment reporting roadmap, prioritising data quality, scalability, and governance</li>
+          <li>Designed the firm's <span class="exp-highlight">first Power BI dashboard</span> tracking funds across 7 third-party platforms, giving portfolio managers granular visibility into client fund distribution and concentration risk across <span class="exp-highlight">£441bn AUM</span></li>
+          <li>Architect and deliver MI dashboards used in senior stakeholder reviews, translating complex portfolio data into clear, decision-ready reporting</li>
+          <li>Drive automation of recurring data workflows and client statement generation via <span class="exp-highlight">Python and SQL</span>, eliminating manual bottlenecks in the reporting cycle</li>
+          <li>Shape the investment analytics roadmap, championing data quality, scalability, and governance as the foundation for reliable automation</li>
         </ul>
       </div>
     </div>
-    <div class="exp-item">
+    <div class="exp-item reveal reveal-delay-1">
       <div class="exp-left">
         <div class="exp-period">Jun — Dec 2025</div>
         <div class="exp-company">JPMorgan Chase & Co</div>
@@ -1005,14 +1077,14 @@
       <div>
         <div class="exp-role">Reference Data Analyst – Global Valuation Services</div>
         <ul class="exp-bullets">
-          <li>Developed <span class="exp-highlight">Python and Alteryx</span> automation workflows — reduced Index Pricing review time from <span class="exp-highlight">45 min → 10 min (78% faster)</span></li>
-          <li>Validated and reconciled pricing and valuation data across equities, fixed income, and derivatives</li>
-          <li>Cross-verified valuations against Bloomberg, Reuters, and ICE pricing vendors</li>
-          <li>Partnered with Operations, Client Service, and Fund Accountants globally to resolve discrepancies</li>
+          <li>Built <span class="exp-highlight">Python and Alteryx</span> automation workflows that cut Index Pricing review time from <span class="exp-highlight">45 min → 10 min</span>, a 78% reduction in manual processing</li>
+          <li>Ensured integrity of pricing and valuation data across equities, fixed income, and derivatives feeding into investment reports and performance analysis</li>
+          <li>Triangulated valuations across Bloomberg, Reuters, and ICE to catch discrepancies before they reached downstream client systems</li>
+          <li>Served as the operational bridge between global teams — Operations, Client Service, and Fund Accountants — to resolve data issues and tighten reporting workflows</li>
         </ul>
       </div>
     </div>
-    <div class="exp-item">
+    <div class="exp-item reveal reveal-delay-2">
       <div class="exp-left">
         <div class="exp-period">May — Dec 2024</div>
         <div class="exp-company">Caladan (fmr. AlphaLab Capital)</div>
@@ -1021,10 +1093,10 @@
       <div>
         <div class="exp-role">Data Analyst Intern – Market Maker (Trading)</div>
         <ul class="exp-bullets">
-          <li>Co-delivered quarterly <span class="exp-highlight">State of Liquidity Report</span> for institutional clients, increasing accuracy by 15%</li>
-          <li>Engineered ETL workflows to clean, normalise, and aggregate on-chain data for cryptocurrency valuations</li>
-          <li>Conducted predictive trading strategies (mean-reversion, trend-following) using <span class="exp-highlight">Linear Regression and PCA</span></li>
-          <li>Built Python ETL framework integrating GitHub activity and social sentiment with market data APIs</li>
+          <li>Co-led the quarterly <span class="exp-highlight">State of Liquidity Report</span> for institutional clients — restructured the methodology to lift accuracy by 15% and sharpen client-facing research output</li>
+          <li>Designed ETL pipelines to ingest, clean, and normalise on-chain data from disparate sources, forming the data backbone for cryptocurrency valuation analysis</li>
+          <li>Researched and back-tested predictive trading strategies including mean-reversion and trend-following models, applying <span class="exp-highlight">Linear Regression and PCA</span> to contribute to algorithm development</li>
+          <li>Extended the data stack by integrating alternative signals — GitHub commit activity and social media sentiment — with market APIs via a custom <span class="exp-highlight">Python ETL framework</span></li>
         </ul>
       </div>
     </div>
@@ -1036,7 +1108,7 @@
   <div class="section-label">Side builds</div>
   <h2 class="section-title">Projects</h2>
   <div class="projects-grid">
-    <div class="project-card">
+    <div class="project-card reveal">
       <div class="project-name">Market Sentiment Analysis</div>
       <p class="project-desc">Web scraping system extracting market sentiments and financial data from Coinglass and CNN. ETL pipeline aggregates signals to surface correlation between crypto and equity markets.</p>
       <div class="project-tags">
@@ -1046,7 +1118,7 @@
         <span class="project-tag">Crypto</span>
       </div>
     </div>
-    <div class="project-card">
+    <div class="project-card reveal reveal-delay-1">
       <div class="project-name">Coffee by the Porch – POS System</div>
       <p class="project-desc">Custom point-of-sale system built from scratch to run a home café, automating order management and syncing to Google Sheets for real-time inventory and operations tracking.</p>
       <div class="project-tags">
@@ -1066,8 +1138,8 @@
       <h2 class="coffee-headline">Coffee<br>by the <em>Porch</em></h2>
       <p class="coffee-desc">A home-based café born from a genuine love of coffee and baking. What started as a passion project turned into a media-featured small business — and an engineering challenge. Beyond the brews, a custom POS system was built using Flask and the Google Sheets API to automate order management and operational workflows.</p>
       <div class="coffee-media-badges">
-        <span class="media-badge">Channel News Asia</span>
-        <span class="media-badge">The Straits Times</span>
+        <a href="https://cnalifestyle.channelnewsasia.com/dining/home-cafes-singapore-coffee-matcha-trend-465956" class="media-badge" target="_blank" rel="noopener" aria-label="Read CNA article"><span>Channel News Asia</span></a>
+        <a href="https://www.straitstimes.com/singapore/want-to-start-a-home-based-business-here-are-3-things-aspiring-entrepreneurs-need-to-know" class="media-badge" target="_blank" rel="noopener" aria-label="Read Straits Times article"><span>The Straits Times</span></a>
       </div>
       <div class="coffee-tech">
         <strong>Stack:</strong> Flask · Google Sheets API · Python — automating orders, inventory, and reporting end-to-end.
@@ -1092,12 +1164,21 @@
 <!-- FOOTER -->
 <footer id="contact">
   <p style="font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--caramel); margin-bottom:1rem;">Get in touch</p>
-  <div class="footer-name">Kaydon Lim Jun Long</div>
-  <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.5rem;">kaydonlim1111@gmail.com</p>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/kaydon-lim/">LinkedIn</a>
-    <a href="https://github.com/hambalah">GitHub</a>
-    <a href="mailto:kaydonlim1111@gmail.com">Email</a>
+  <div class="footer-name">Kaydon Lim</div>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.5rem;">kaydonlim@gmail.com</p>
+  <div class="footer-icon-links">
+    <a href="https://www.linkedin.com/in/kaydon-lim/" class="btn-icon" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://github.com/hambalah" class="btn-icon" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    </a>
+    <a href="mailto:kaydonlim@gmail.com" class="btn-icon" aria-label="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </a>
+    <a href="Kaydon_Resume_2026.pdf" class="btn-icon" download aria-label="Download Resume">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </a>
   </div>
   <p class="footer-copy">© 2026 Kaydon Lim. Built with purpose.</p>
 </footer>
@@ -1134,6 +1215,18 @@
       document.body.style.overflow = '';
     });
   });
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
 </body>
